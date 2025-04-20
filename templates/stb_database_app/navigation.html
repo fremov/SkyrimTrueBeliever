@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STB v2.2f Навигация</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-color: #1e1e1e;
+            --text-color: #e0e0e0;
+            --accent-color: #bb86fc;
+            --secondary-color: #03dac6;
+            --hover-color: #2a2a2a;
+            --border-color: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: var(--card-color);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .social-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            background-color: rgba(187, 134, 252, 0.1);
+        }
+
+        .version {
+            text-align: center;
+            font-size: 1.3em;
+            margin: 15px 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .nav-item {
+            padding: 12px 8px;
+            text-align: center;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            font-size: 0.95em;
+        }
+
+        .nav-item:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        .sections {
+            display: flex;
+            gap: 30px;
+            margin-top: 35px;
+        }
+
+        .section {
+            flex: 1;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            font-size: 1.1em;
+        }
+
+        .team-list, .sponsors-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .team-list li, .sponsors-list li {
+            margin-bottom: 10px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .team-list li:before {
+            content: "•";
+            color: var(--secondary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .sponsor-number {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .thanks {
+            font-style: italic;
+            margin-top: 15px;
+            color: #aaaaaa;
+        }
+
+        @media (max-width: 768px) {
+            .nav-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sections {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .social-links {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="social-links">
+            <a href="https://boosty.to/skyrimtruebeliever">Boosty</a>
+            <a href="https://discord.gg/RBpn3SqgvZ">Discord</a>
+            <a href="https://www.patreon.com/SkyrimTrueBeliever390">Patreon</a>
+            <a href="#">Ko-fi</a>
+        </div>
+
+        <div class="version">
+            STB v2.2f
+        </div>
+
+        <div class="nav-grid">
+            <a href="{% url 'base' %}"><div class="nav-item">📚 База</div></a>
+            <a href="{% url 'races' %}"><div class="nav-item">🗿 Расы/Камни</div></a>
+            <div class="nav-item">😇 Аэдра</div>
+            <div class="nav-item">😈 Даэдра</div>
+
+            <div class="nav-item">🧛🐺 Проклятые</div>
+            <div class="nav-item">⭐ Ветки</div>
+            <div class="nav-item">🧪 Расходники</div>
+            <div class="nav-item">✨ Зачарования</div>
+
+            <div class="nav-item">⚔️ Снаряжение</div>
+            <div class="nav-item">💎 Уники</div>
+            <div class="nav-item">🌈 Закл/Туумы</div>
+            <div class="nav-item">👻 Самоны</div>
+
+            <div class="nav-item">⛰️ Данж лист</div>
+            <div class="nav-item">💰 Награды</div>
+            <div class="nav-item">🥇 Сложность</div>
+        </div>
+
+        <div class="header">
+            <h3>Вклад в STB v2.2f</h3>
+        </div>
+
+        <div class="sections">
+            <div class="section">
+                <div class="section-title">РАЗРАБОТКА</div>
+                <ul class="team-list">
+                    <li><strong>Sneyk</strong> - главный работяга, скриптер, dll</li>
+                    <li><strong>Polaris</strong> - главный балансер</li>
+                    <li><strong>Мастер Изгой Егор</strong> - работяга, связной</li>
+                    <li><strong>KBA3AP</strong> - баланс, идеи</li>
+                    <li><strong>Norby</strong> - интерфейс, виджеты</li>
+                    <li><strong>MoonDream</strong> - граф пак, локации</li>
+                    <li><strong>Fenix</strong> - реверс, советы по коду, dll</li>
+                    <li><strong>Курт</strong> - тестер №1, фиксы</li>
+                    <li><strong>Кусь</strong> - калькулятор перков</li>
+                    <li><strong>Зарик</strong> - комьюнити менеджер, фиксы</li>
+                    <li><strong>Data Name ID</strong> - сайт, дискорд, помощник</li>
+                    <li><strong>Sensei chereshnya</strong> - мелкие правки</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <div class="section-title">ТОП СПОНСОРОВ</div>
+                <ul class="sponsors-list">
+                    <li><span class="sponsor-number">№1</span> - YashYesh</li>
+                    <li><span class="sponsor-number">№2</span> - leonhetch</li>
+                    <li><span class="sponsor-number">№3</span> - yosh1m</li>
+                    <li><span class="sponsor-number">№4</span> - silk_911</li>
+                    <li><span class="sponsor-number">№5</span> - Кирилл Зотов</li>
+                    <li><span class="sponsor-number">№6</span> - Сергей Нечитайло</li>
+                    <li><span class="sponsor-number">№7</span> - Kadzitsu</li>
+                    <li><span class="sponsor-number">№8</span> - Ermac</li>
+                    <li><span class="sponsor-number">№9</span> - Данил Васильев</li>
+                    <li><span class="sponsor-number">№10</span> - qwerrwe</li>
+                </ul>
+                <p class="thanks">Так же огромное спасибо всем остальным спонсорам!</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
