@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aedra Pantheon</title>
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --primary: #bb86fc;
+            --secondary: #03dac6;
+            --accent: #3700b3;
+            --text: #e0e0e0;
+            --text-secondary: #a0a0a0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #6200ee;
+            transform: translateY(-2px);
+        }
+
+        .pantheon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .aedra-card {
+            background-color: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .aedra-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .aedra-header {
+            background: linear-gradient(135deg, var(--accent), #6200ee);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .aedra-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+            color: white;
+        }
+
+        .aedra-title {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 5px;
+        }
+
+        .aedra-content {
+            padding: 20px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #333;
+            margin-bottom: 15px;
+        }
+
+        .tab-btn {
+            padding: 8px 15px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .blessing-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #333;
+        }
+
+        .blessing-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .blessing-title {
+            color: var(--secondary);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .amulet-section {
+            background-color: rgba(59, 0, 179, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .amulet-title {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-button">← Return to Main Hall</a>
+
+        <div class="pantheon-grid">
+            {% for aedra in aedras %}
+            <div class="aedra-card">
+                <div class="aedra-header">
+                    <h2 class="aedra-name">{{ aedra.name }}</h2>
+                    <div class="aedra-title">{{ aedra.divine_gift }}</div>
+                </div>
+
+                <div class="aedra-content">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" onclick="openTab(event, 'blessings-{{ loop.index }}')">Blessings</button>
+                        <button class="tab-btn" onclick="openTab(event, 'amulet-{{ loop.index }}')">Amulet</button>
+                    </div>
+
+                    <div id="blessings-{{ loop.index }}" class="tab-content active">
+                        <div class="blessing-item">
+                            <div class="blessing-title">Divine Gift</div>
+                            <div>{{ aedra.divine_gift }}</div>
+                        </div>
+
+                        <div class="blessing-item">
+                            <div class="blessing-title">Primary Blessing</div>
+                            <div>{{ aedra.bless }}</div>
+                        </div>
+
+                        {% if aedra.additional_blessings %}
+                        <div class="blessing-item">
+                            <div class="blessing-title">Additional Blessings</div>
+                            <div>{{ aedra.additional_blessings }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div id="amulet-{{ loop.index }}" class="tab-content">
+                        <div class="amulet-section">
+                            <div class="amulet-title">Sacred Amulet</div>
+                            <div>{{ aedra.amulet }}</div>
+
+                            <div style="margin-top: 15px;">
+                                <div class="blessing-title">Backpack Effect</div>
+                                <div>{{ aedra.backpack_with_amulet }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+
+            const tabButtons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>

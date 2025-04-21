@@ -1,0 +1,18 @@
+# Virtual environment
+venv/
+
+# Django
+*.sqlite3
+*.pyc
+__pycache__/
+*.swp
+*.swo
+*.log
+local_settings.py
+db.sqlite3
+staticfiles/
+
+# IDE
+.idea/
+
+he/

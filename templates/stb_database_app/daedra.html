@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daedra</title>
+</head>
+<body>
+{% for daedra in daedras %}
+{{ daedra.name }}
+{{ daedra.divine_gift }}
+{{ daedra.artefact }}
+{{ daedra.effect }}
+{% endfor %}
+</body>
+</html>

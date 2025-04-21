@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Races Database</title>
+
     <style>
         :root {
             --dark-bg: #121212;
@@ -19,7 +20,7 @@
             --negative: #f44336;
             --neutral: #e0e0e0;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--dark-bg);
@@ -27,7 +28,7 @@
             margin: 0;
             padding: 20px;
         }
-        
+
         h1 {
             color: var(--accent-color);
             text-align: center;
@@ -35,64 +36,64 @@
             font-size: 2.2em;
             text-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             overflow-x: auto;
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 25px 0;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
-        
+
         th, td {
             padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid var(--table-border);
         }
-        
+
         thead tr {
             background-color: var(--header-bg);
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         tbody tr:nth-child(odd) {
             background-color: var(--row-odd);
         }
-        
+
         tbody tr:nth-child(even) {
             background-color: var(--row-even);
         }
-        
+
         tbody tr:hover {
             background-color: var(--hover-color);
             transition: background-color 0.2s ease;
         }
-        
+
         .no-data {
             text-align: center;
             color: #888;
             font-style: italic;
         }
-        
+
         .resistance {
             font-weight: bold;
         }
-        
+
         .positive {
             color: var(--positive);
         }
-        
+
         .negative {
             color: var(--negative);
         }
-        
+
         .race-title {
             font-weight: bold;
             color: var(--accent-color);
@@ -100,63 +101,110 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Характеристики Рас</h1>
-        
+<a href="{% url 'home' %}"><div class="button">На главную</div></a>
+<div class="container">
+    <h1>Характеристики Рас</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Название расы</th>
+            <th>Броня</th>
+            <th>Резист к огню</th>
+            <th>Резист к холоду</th>
+            <th>Резист к молнии</th>
+            <th>Резист к хаосу</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for race in races %}
+            <tr>
+                <td class="race-title">{{ race.title }}</td>
+                <td class="resistance {% if race.armor > 0 %}positive{% elif race.armor < 0 %}negative{% endif %}">
+                    {{ race.armor }}
+                </td>
+                <td class="resistance {% if race.fire_res > 0 %}positive{% elif race.fire_res < 0 %}negative{% endif %}">
+                    {{ race.fire_res }}
+                </td>
+                <td class="resistance {% if race.cold_res > 0 %}positive{% elif race.cold_res < 0 %}negative{% endif %}">
+                    {{ race.cold_res }}
+                </td>
+                <td class="resistance {% if race.lighting_res > 0 %}positive{% elif race.lighting_res < 0 %}negative{% endif %}">
+                    {{ race.lighting_res }}
+                </td>
+                <td class="resistance {% if race.chaos_res > 0 %}positive{% elif race.chaos_res < 0 %}negative{% endif %}">
+                    {{ race.chaos_res }}
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6" class="no-data">Расы не найдены в базе данных</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+ <h2>Врожденные способности</h2>
+
+        <table class="ability-table">
+            <tbody>
+                {% for ability in innate_abilities %}
+                    {% if forloop.counter0|divisibleby:4 %}
+                        <tr>
+                    {% endif %}
+
+                    <td>
+                        <div class="ability-item">{{ ability.ability }}</div>
+                    </td>
+
+                    {% if forloop.counter|divisibleby:4 or forloop.last %}
+                        </tr>
+                    {% endif %}
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="no-data">Способности не найдены в базе данных</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+<div class="container">
+        <h1>Камни силы Скайрима</h1>
+
         <table>
             <thead>
                 <tr>
-                    <th>Название расы</th>
-                    <th>Броня</th>
-                    <th>Резист к огню</th>
-                    <th>Резист к холоду</th>
-                    <th>Резист к молнии</th>
-                    <th>Резист к хаосу</th>
+                    <th>Название камня</th>
+                    <th>Описание</th>
                 </tr>
             </thead>
             <tbody>
-                {% for race in races %}
+                {% for stone in stones %}
                 <tr>
-                    <td class="race-title">{{ race.title }}</td>
-                    <td class="resistance {% if race.armor > 0 %}positive{% elif race.armor < 0 %}negative{% endif %}">
-                        {{ race.armor }}
-                    </td>
-                    <td class="resistance {% if race.fire_res > 0 %}positive{% elif race.fire_res < 0 %}negative{% endif %}">
-                        {{ race.fire_res }}
-                    </td>
-                    <td class="resistance {% if race.cold_res > 0 %}positive{% elif race.cold_res < 0 %}negative{% endif %}">
-                        {{ race.cold_res }}
-                    </td>
-                    <td class="resistance {% if race.lighting_res > 0 %}positive{% elif race.lighting_res < 0 %}negative{% endif %}">
-                        {{ race.lighting_res }}
-                    </td>
-                    <td class="resistance {% if race.chaos_res > 0 %}positive{% elif race.chaos_res < 0 %}negative{% endif %}">
-                        {{ race.chaos_res }}
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="6" class="no-data">Расы не найдены в базе данных</td>
+                    <td class="stone-name">{{ stone.title }}</td>
+                    <td class="stone-desc">{{ stone.text }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+</div>
+<script>
+    // Добавляем обработку нулевых значений
+    document.addEventListener('DOMContentLoaded', function () {
+        const resistances = document.querySelectorAll('.resistance');
 
-    <script>
-        // Добавляем обработку нулевых значений
-        document.addEventListener('DOMContentLoaded', function() {
-            const resistances = document.querySelectorAll('.resistance');
-            
-            resistances.forEach(res => {
-                const value = parseFloat(res.textContent);
-                if (value > 0) {
-                    res.classList.add('positive');
-                } else if (value < 0) {
-                    res.classList.add('negative');
-                }
-            });
+        resistances.forEach(res => {
+            const value = parseFloat(res.textContent);
+            if (value > 0) {
+                res.classList.add('positive');
+            } else if (value < 0) {
+                res.classList.add('negative');
+            }
         });
-    </script>
+    });
+</script>
+
+
 </body>
 </html>
